@@ -79,7 +79,7 @@ for tag in $tags; do
 							if .builder == "classic" or .builder == "" then
 								"DOCKER_BUILDKIT=0 docker build"
 							elif .builder == "buildkit" then
-								"docker buildx build --progress plain --build-arg BUILDKIT_SYNTAX=\"$BASHBREW_BUILDKIT_SYNTAX\""
+								"docker --secret \"id=nginx-crt,env=REPOCRT\" --secret \"id=nginx-key,env=REPOKEY\"  buildx build --progress plain --build-arg BUILDKIT_SYNTAX=\"$BASHBREW_BUILDKIT_SYNTAX\""
 							# TODO elif .builder == "oci-import" then ????
 							else
 								"echo >&2 " + ("error: unknown/unsupported builder: " + .builder | @sh) + "\nexit 1\n#"
